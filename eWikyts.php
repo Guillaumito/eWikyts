@@ -3,6 +3,7 @@
 if (!defined('MEDIAWIKI')) {
         echo <<<EOT
 To install my extension, put the following line in LocalSettings.php:
+\$wgWikytsTitle = "YourTitle";
 require_once( "\$IP/extensions/eWikyts/eWikyts.php" );
 EOT;
         exit( 1 );
@@ -16,8 +17,8 @@ $wgSpecialPages['eWikyts'] = 'eWikyts'; # Let MediaWiki know about your new spec
 $wgHooks['LanguageGetSpecialPageAliases'][] = 'myExtensionLocalizedPageName'; # Add any aliases for the special page.
  
 function myExtensionLocalizedPageName(&$specialPageArray, $code) {
-  # The localized title of the special page is among the messages of the extension:
-  wfLoadExtensionMessages('eWikyts');
+  if (function_exists('wfLoadExtensionMessages'))
+    wfLoadExtensionMessages('eWikyts');
   $text = wfMsg('ewikyts');
  
   # Convert from title in text form to DBKey and put it into the alias array:

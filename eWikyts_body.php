@@ -8,8 +8,9 @@ class eWikyts extends SpecialPage {
 	private $currentlang;
 
         function eWikyts() {
-                SpecialPage::SpecialPage("eWikyts");
-                wfLoadExtensionMessages('eWikyts');
+		SpecialPage::SpecialPage("eWikyts");
+		if (function_exists('wfLoadExtensionMessages'))
+			wfLoadExtensionMessages('eWikyts');
 
 		$this->langs = array();
 		$this->basestrings = array();
