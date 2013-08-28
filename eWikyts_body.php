@@ -87,8 +87,22 @@ class eWikyts extends SpecialPage {
 	function listStrings() {
 		global $wgOut, $wgTitle;
 
+		$wgOut->addHTML( '<script type="text/javascript">
+			function selectall() {
+				var inputs = document.getElementsByName("wikytsidx[]");
+				for(var i = 0;i < inputs.length;i++)
+					inputs[i].checked = "checked";
+			}
+			function selectnone() {
+				var inputs = document.getElementsByName("wikytsidx[]");
+				for(var i = 0;i < inputs.length;i++)
+					inputs[i].checked = "";
+			}
+		</script>' );
+
 		$wgOut->addHTML( "<form method='POST'>" );
 
+		$wgOut->addHTML( 'Select: <a href="javascript:selectall();">all</a> / <a href="javascript:selectnone();">none</a>' );
 		$wgOut->addHTML( "<input type='submit' value='Edit selected'/>" );
 
 		$wgOut->addHTML( "<table>" );
