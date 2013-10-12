@@ -39,7 +39,7 @@ class eWikyts extends SpecialPage {
 				foreach($values as $name => $value) {
 					if(substr($name, 0, 12) == "wikytsstring") {
 						$idx = (int) substr($name, 12);
-						$this->strings[$this->basestrings[$idx]] = "<nowiki>$value</nowiki>";
+						$this->strings[strtolower($this->basestrings[$idx])] = "<nowiki>$value</nowiki>";
 					}
 				}
 				$this->save($this->currentlang);
@@ -54,7 +54,7 @@ class eWikyts extends SpecialPage {
 		$wgOut->addHTML( "<form method='POST'>" );
 		$wgOut->addHTML( "<table style='width:100%'>" );
 		foreach($wikytsidx as $idx) {
-			$value = $this->strings[$this->basestrings[$idx]];
+			$value = $this->strings[strtolower($this->basestrings[$idx])];
 			if (preg_match(',^<nowiki>(.*)<\/nowiki>$,', $value, $matches))
 				$value = $matches[1];
 			$wgOut->addHTML( "<tr><td>" . $wgOut->parse($this->basestrings[$idx]) . "</td>");
@@ -110,7 +110,7 @@ class eWikyts extends SpecialPage {
 			$wgOut->addHTML( "<tr>" );
 			$wgOut->addHTML( "<td><input name=\"wikytsidx[]\" type='checkbox' value='$i'/></td>" );
 			$wgOut->addHTML( "<td>" . $wgOut->parse($this->basestrings[$i]) . "</td>" );
-			$wgOut->addHTML( "<td>" . $wgOut->parse($this->strings[$this->basestrings[$i]]) . "</td>");
+			$wgOut->addHTML( "<td>" . $wgOut->parse($this->strings[strtolower($this->basestrings[$i])]) . "</td>");
 			$wgOut->addHTML( "</tr>" );
 		}
 		$wgOut->addHTML( "</table>" );
@@ -126,7 +126,7 @@ class eWikyts extends SpecialPage {
 
 		foreach($this->basestrings as $string) {
 			$data .= " |-\n";
-			$data .= " |" . $string . "||" . $this->strings[$string] . "\n";
+			$data .= " |" . $string . "||" . $this->strings[strtolower($string)] . "\n";
 		}
 		$data .= " |}";
 
@@ -155,7 +155,7 @@ class eWikyts extends SpecialPage {
 				$this->currentkey = $value;
 				break;
 			case 1:
-				$this->strings[$this->currentkey] = $value;
+				$this->strings[strtolower($this->currentkey)] = $value;
 				break;
 		}
 	}
